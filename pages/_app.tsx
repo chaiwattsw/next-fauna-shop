@@ -1,8 +1,22 @@
-import '../styles/globals.css'
-import type { AppProps } from 'next/app'
+import "../styles/globals.css";
+import type { AppProps } from "next/app";
+import Nav from "../components/Nav";
+import { ApolloProvider } from "@apollo/client";
+import { UserProvider } from "@auth0/nextjs-auth0";
+import { client } from "../gqlClient";
+import { Provider } from "../context";
 
 function MyApp({ Component, pageProps }: AppProps) {
-  return <Component {...pageProps} />
+  return (
+    <Provider>
+      <UserProvider>
+        <ApolloProvider client={client}>
+          <Nav />
+          <Component {...pageProps} />
+        </ApolloProvider>
+      </UserProvider>
+    </Provider>
+  );
 }
 
-export default MyApp
+export default MyApp;
